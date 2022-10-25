@@ -1,4 +1,4 @@
-ARG UBUNTU_VERSION=20.04
+ARG UBUNTU_VERSION=22.04
 FROM ubuntu:$UBUNTU_VERSION
 MAINTAINER mammo0 - https://github.com/mammo0
 
