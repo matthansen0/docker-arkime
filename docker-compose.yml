@@ -24,6 +24,7 @@ services:
             - bootstrap.memory_lock=true
             - "OPENSEARCH_JAVA_OPTS=-Xms$OS_JAVA_MEM -Xmx$OS_JAVA_MEM"
             - DISABLE_SECURITY_PLUGIN=true
+            - DISABLE_INSTALL_DEMO_CONFIG=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE1:/usr/share/opensearch/data
     os02:
@@ -38,6 +39,7 @@ services:
             - bootstrap.memory_lock=true
             - "OPENSEARCH_JAVA_OPTS=-Xms$OS_JAVA_MEM -Xmx$OS_JAVA_MEM"
             - DISABLE_SECURITY_PLUGIN=true
+            - DISABLE_INSTALL_DEMO_CONFIG=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE2:/usr/share/opensearch/data
     os03:
@@ -52,6 +54,7 @@ services:
             - bootstrap.memory_lock=true
             - "OPENSEARCH_JAVA_OPTS=-Xms$OS_JAVA_MEM -Xmx$OS_JAVA_MEM"
             - DISABLE_SECURITY_PLUGIN=true
+            - DISABLE_INSTALL_DEMO_CONFIG=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE3:/usr/share/opensearch/data
 
