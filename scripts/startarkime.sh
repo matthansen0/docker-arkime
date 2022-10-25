@@ -13,9 +13,10 @@ echo "ES started..."
 export ARKIME_PASSWORD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w32 | head -n1)  # random password
 export ARKIME_LOCALELASTICSEARCH=no
 export ARKIME_ELASTICSEARCH="http://"$ES_HOST":"$ES_PORT
+export ARKIME_INET=no
 
 if [ ! -f $ARKIMEDIR/etc/.initialized ]; then
-    echo $ARKIME_LOCALELASTICSEARCH | $ARKIMEDIR/bin/Configure
+    echo -e "$ARKIME_LOCALELASTICSEARCH\n$ARKIME_INET" | $ARKIMEDIR/bin/Configure
     echo INIT | $ARKIMEDIR/db/db.pl http://$ES_HOST:$ES_PORT init
     $ARKIMEDIR/bin/arkime_add_user.sh admin "Admin User" $ARKIME_ADMIN_PASSWORD --admin
     echo $ARKIME_VERSION > $ARKIMEDIR/etc/.initialized
@@ -28,7 +29,7 @@ else
     # otherwise -> upgrade
     if [ "$old_ver" != "$newer_ver" ]; then
         echo "Upgrading ES database..."
-        echo $ARKIME_LOCALELASTICSEARCH | $ARKIMEDIR/bin/Configure
+        echo -e "$ARKIME_LOCALELASTICSEARCH\n$ARKIME_INET" | $ARKIMEDIR/bin/Configure
         echo UPGRADE | $ARKIMEDIR/db/db.pl http://$ES_HOST:$ES_PORT upgrade
         echo $ARKIME_VERSION > $ARKIMEDIR/etc/.initialized
     fi
