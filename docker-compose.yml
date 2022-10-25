@@ -1,9 +1,5 @@
 x-os_instance: &_os_instance
     image: opensearchproject/opensearch:$OS_VERSION
-    deploy:
-      resources:
-        limits:
-          memory: $OS_MAX_MEM
     ulimits:
         nofile:
             soft: 65535
@@ -26,6 +22,7 @@ services:
             - cluster.name=os-arkime-cluster
             - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
+            - "OPENSEARCH_JAVA_OPTS=-Xms$OS_JAVA_MEM -Xmx$OS_JAVA_MEM"
             - DISABLE_SECURITY_PLUGIN=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE1:/usr/share/opensearch/data
@@ -39,6 +36,7 @@ services:
             - cluster.name=os-arkime-cluster
             - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
+            - "OPENSEARCH_JAVA_OPTS=-Xms$OS_JAVA_MEM -Xmx$OS_JAVA_MEM"
             - DISABLE_SECURITY_PLUGIN=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE2:/usr/share/opensearch/data
@@ -52,6 +50,7 @@ services:
             - cluster.name=os-arkime-cluster
             - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
+            - "OPENSEARCH_JAVA_OPTS=-Xms$OS_JAVA_MEM -Xmx$OS_JAVA_MEM"
             - DISABLE_SECURITY_PLUGIN=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE3:/usr/share/opensearch/data
