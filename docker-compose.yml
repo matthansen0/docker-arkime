@@ -1,8 +1,9 @@
-version: '2.2'
-
 x-es_instance: &_es_instance
     image: docker.elastic.co/elasticsearch/elasticsearch:$ES_VERSION
-    mem_limit: $ES_MAX_MEM
+    deploy:
+      resources:
+        limits:
+          memory: $ES_MAX_MEM
     ulimits:
         nofile:
             soft: 65535
