@@ -30,7 +30,7 @@ else
     if [ "$old_ver" != "$newer_ver" ]; then
         echo "Upgrading ES database..."
         echo -e "$ARKIME_LOCALELASTICSEARCH\n$ARKIME_INET" | $ARKIMEDIR/bin/Configure
-        echo UPGRADE | $ARKIMEDIR/db/db.pl http://$ES_HOST:$ES_PORT upgrade
+        $ARKIMEDIR/db/db.pl http://$ES_HOST:$ES_PORT upgradenoprompt
         echo $ARKIME_VERSION > $ARKIMEDIR/etc/.initialized
     fi
 fi
@@ -62,6 +62,6 @@ if [ "$VIEWER" = "on" ]
 then
     echo "Launch viewer..."
     pushd $ARKIMEDIR/viewer
-    exec $ARKIMEDIR/bin/node $ARKIMEDIR/viewer/viewer.js -c $ARKIMEDIR/etc/config.ini --host $ARKIME_HOSTNAME >> $ARKIMEDIR/logs/viewer.log 2>&1
+    exec $ARKIMEDIR/bin/node viewer.js -c $ARKIMEDIR/etc/config.ini --host $ARKIME_HOSTNAME >> $ARKIMEDIR/logs/viewer.log 2>&1
     popd
 fi
