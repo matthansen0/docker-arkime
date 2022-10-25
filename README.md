@@ -6,7 +6,7 @@ This repository contains the files to build a Docker image of the Arkime softwar
 
 Ready to use Docker images can be pulled from https://hub.docker.com/r/mammo0/docker-arkime
 
-To run this image a **working Elasticsearch** environment is required. Please stick to their documentation for setting this up. (E.g. for docker: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
+To run this image a **working OpenSearch** environment is required. Please stick to their documentation for setting this up. (E.g. for Docker: https://opensearch.org/docs/latest/opensearch/install/docker)
 
 
 
@@ -15,8 +15,8 @@ This image can be run with
 
 ```shell
 docker run \
-    -e ES_HOST=elasticsearch \
-    -e ES_PORT 9200 \
+    -e OS_HOST=opensearch \
+    -e OS_PORT 9200 \
     -v <config_volume>:/data/config \
     -v <pcap_volume>:/data/pcap \
     -v <log_volume>:/data/logs \
@@ -28,11 +28,11 @@ These parameters are available:
 
 | ENV VARIABLE | DEFAULT VALUE |  NOTES |
 | - | - | - |
-| ES_HOST | elasticsearch | The hostname or IP address where Elasticsearch is running.  |
-| ES_PORT | 9200 | The port where Elasticsearch is reachable. |
+| OS_HOST | opensearch | The hostname or IP address where OpenSearch is running.  |
+| OS_PORT | 9200 | The port where OpenSearch is reachable. |
 | ARKIME_ADMIN_PASSWORD | admin | This is the password for the Arkime admin user that is needed for the first login. It can be changed afterwards. |
 | ARKIME_INTERFACE | eth0 | Network interface where `capture` process listens. **This feature is not tested yet!** |
-| ARKIME_HOSTNAME | localhost | With this hostname Arkime authenticates at Elasticsearch. So if you change this you'll lose your Elasticsearch configuration. |
+| ARKIME_HOSTNAME | localhost | With this hostname Arkime authenticates at OpenSearch. So if you change this you'll lose your OpenSearch configuration. |
 | CAPTURE | off | Set to "on" to activate the `capture` process. **This feature is not tested yet!** |
 | VIEWER | on | Set to "off" to deactivate the Arkime viewer. |
 
@@ -45,21 +45,26 @@ These parameters are available:
 
 
 ### Use `docker-compose`
-You can use `docker-compose` if you want to setup Elasticsearch together with Arkime in one step.
+You can use `docker-compose` if you want to setup OpenSearch together with Arkime in one step.
 
 #### Configuration
 1. Please copy or rename the file `docker-compose.env` to `.env` **before** running `docker-compose up`. You may want to change some of the variables inside. Each variable is documented there.
 
-2. Please ensure you have done this step (otherwise Elasticsearch won't start): https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+2. Please ensure you have done this step (otherwise OpenSearch won't start): https://opensearch.org/docs/latest/opensearch/install/docker/#important-host-settings
 
-3. Run `chmod -R 777 es_data` **OR** `chown -R 1000:1000 es_data`. This is needed for the Elasticsearch containers to be able to write to that direcotry.
+    To apply the setting on a live system, run:
+    ```shell
+    sysctl -w vm.max_map_count=262144
+    ```
+
+3. Run `chmod -R 777 os_data` **OR** `chown -R 1000:1000 os_data`. This is needed for the OpenSearch containers to be able to write to that direcotry.
 
 #### Start
 Simply run
 ```shell
 docker-compose up -d
 ```
-*It can take some time until the Elasticsearch instances are fully started.*
+*It can take some time until the OpenSearch instances are fully started.*
 
 The Arkime viewer instance can be accessed via
 

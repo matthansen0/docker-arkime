@@ -1,9 +1,9 @@
-x-es_instance: &_es_instance
-    image: docker.elastic.co/elasticsearch/elasticsearch:$ES_VERSION
+x-os_instance: &_os_instance
+    image: opensearchproject/opensearch:$OS_VERSION
     deploy:
       resources:
         limits:
-          memory: $ES_MAX_MEM
+          memory: $OS_MAX_MEM
     ulimits:
         nofile:
             soft: 65535
@@ -12,58 +12,58 @@ x-es_instance: &_es_instance
             soft: -1
             hard: -1
     networks:
-        - arkime-elastic
+        - arkime-os
 
 
 services:
-    es01:
-        <<: *_es_instance
-        container_name: $ES_NODE1
+    os01:
+        <<: *_os_instance
+        container_name: $OS_NODE1
         environment:
-            - node.name=$ES_NODE1
-            - discovery.seed_hosts=$ES_NODE2,$ES_NODE3
+            - node.name=$OS_NODE1
+            - discovery.seed_hosts=$OS_NODE2,$OS_NODE3
             # default
-            - cluster.name=es-arkime-cluster
-            - cluster.initial_master_nodes=$ES_NODE1,$ES_NODE2,$ES_NODE3
+            - cluster.name=os-arkime-cluster
+            - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
         volumes:
-            - $ES_DATA_DIR/$ES_NODE1:/usr/share/elasticsearch/data
-    es02:
-        <<: *_es_instance
-        container_name: $ES_NODE2
+            - $OS_DATA_DIR/$OS_NODE1:/usr/share/opensearch/data
+    os02:
+        <<: *_os_instance
+        container_name: $OS_NODE2
         environment:
-            - node.name=$ES_NODE2
-            - discovery.seed_hosts=$ES_NODE1,$ES_NODE3
+            - node.name=$OS_NODE2
+            - discovery.seed_hosts=$OS_NODE1,$OS_NODE3
             # default
-            - cluster.name=es-arkime-cluster
-            - cluster.initial_master_nodes=$ES_NODE1,$ES_NODE2,$ES_NODE3
+            - cluster.name=os-arkime-cluster
+            - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
         volumes:
-            - $ES_DATA_DIR/$ES_NODE2:/usr/share/elasticsearch/data
-    es03:
-        <<: *_es_instance
-        container_name: $ES_NODE3
+            - $OS_DATA_DIR/$OS_NODE2:/usr/share/opensearch/data
+    os03:
+        <<: *_os_instance
+        container_name: $OS_NODE3
         environment:
-            - node.name=$ES_NODE3
-            - discovery.seed_hosts=$ES_NODE1,$ES_NODE2
+            - node.name=$OS_NODE3
+            - discovery.seed_hosts=$OS_NODE1,$OS_NODE2
             # default
-            - cluster.name=es-arkime-cluster
-            - cluster.initial_master_nodes=$ES_NODE1,$ES_NODE2,$ES_NODE3
+            - cluster.name=os-arkime-cluster
+            - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
         volumes:
-            - $ES_DATA_DIR/$ES_NODE3:/usr/share/elasticsearch/data
+            - $OS_DATA_DIR/$OS_NODE3:/usr/share/opensearch/data
 
     arkime:
         build:
             context: .
             dockerfile: Dockerfile
         depends_on:
-            - $ES_NODE1
-            - $ES_NODE2
-            - $ES_NODE3
+            - $OS_NODE1
+            - $OS_NODE2
+            - $OS_NODE3
         environment:
-            - ES_HOST=$ES_NODE1
-            - ES_PORT=9200
+            - OS_HOST=$OS_NODE1
+            - OS_PORT=9200
         ports:
             - $ARKIME_PORT:8005
         volumes:
@@ -71,7 +71,7 @@ services:
             - arkime_logs:/data/logs
             - $PCAP_DIR:/data/pcap
         networks:
-            - arkime-elastic
+            - arkime-os
 
 volumes:
     arkime_config:
@@ -79,4 +79,4 @@ volumes:
 
 
 networks:
-    arkime-elastic:
+    arkime-os:
