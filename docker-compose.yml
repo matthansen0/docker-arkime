@@ -26,6 +26,7 @@ services:
             - cluster.name=os-arkime-cluster
             - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
+            - DISABLE_SECURITY_PLUGIN=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE1:/usr/share/opensearch/data
     os02:
@@ -38,6 +39,7 @@ services:
             - cluster.name=os-arkime-cluster
             - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
+            - DISABLE_SECURITY_PLUGIN=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE2:/usr/share/opensearch/data
     os03:
@@ -50,6 +52,7 @@ services:
             - cluster.name=os-arkime-cluster
             - cluster.initial_master_nodes=$OS_NODE1,$OS_NODE2,$OS_NODE3
             - bootstrap.memory_lock=true
+            - DISABLE_SECURITY_PLUGIN=true
         volumes:
             - $OS_DATA_DIR/$OS_NODE3:/usr/share/opensearch/data
 
