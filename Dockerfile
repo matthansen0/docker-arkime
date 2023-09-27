@@ -32,7 +32,10 @@ RUN mkdir -p /data && \
     mv "${ARKIMEDIR}/etc" /data/config && \
     ln -s /data/config "${ARKIMEDIR}/etc" && \
     ln -s /data/logs "${ARKIMEDIR}/logs" && \
-    ln -s /data/pcap "${ARKIMEDIR}/raw"
+    ln -s /data/pcap "${ARKIMEDIR}/raw" && \
+    # create the etc/oui.txt
+    # It's needed for importing PCAPs. This step is omitted during 'Configure', because ARKIME_INET=no is set in 'startarkime.sh'
+    "${ARKIMEDIR}/bin/arkime_update_geo.sh"
 # clean up
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/* && \
     rm "/data/${ARKIME_DEB_PACKAGE}"
