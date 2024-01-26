@@ -10,7 +10,7 @@ RUN apt-get -qq update && \
 # Declare args
 ARG ARKIME_VERSION=4.5.0
 ARG UBUNTU_VERSION
-ARG ARKIME_DEB_PACKAGE="arkime_${ARKIME_VERSION}-1_amd64.deb"
+ARG ARKIME_DEB_PACKAGE="arkime_${ARKIME_VERSION}-1.ubuntu2204_amd64.deb"
 
 # Declare envs vars for each arg
 ENV ARKIME_VERSION $ARKIME_VERSION
@@ -26,8 +26,8 @@ ENV VIEWER "on"
 # Install Arkime
 RUN mkdir -p /data && \
     cd /data && \
-    curl -C - -O "https://s3.amazonaws.com/files.molo.ch/builds/ubuntu-${UBUNTU_VERSION}/${ARKIME_DEB_PACKAGE}" && \
-    dpkg -i "$ARKIME_DEB_PACKAGE" || true && \
+    curl -L -O "https://github.com/arkime/arkime/releases/download/v${ARKIME_VERSION}/${ARKIME_DEB_PACKAGE}" && \
+    dpkg -i "${ARKIME_DEB_PACKAGE}" || true && \
     apt-get install -yqf && \
     mv "${ARKIMEDIR}/etc" /data/config && \
     ln -s /data/config "${ARKIMEDIR}/etc" && \
