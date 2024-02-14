@@ -57,14 +57,12 @@ You can use `docker-compose` if you want to setup OpenSearch together with Arkim
     sysctl -w vm.max_map_count=262144
     ```
 
-3. Run `chmod -R 777 os_data` **OR** `chown -R 1000:1000 os_data`. This is needed for the OpenSearch containers to be able to write to that direcotry.
-
 #### Start
 Simply run
 ```shell
 docker-compose up -d
 ```
-*It can take some time until the OpenSearch instances are fully started.*
+*It can take some time until the OpenSearch instance(s) is/are fully started.*
 
 The Arkime viewer instance can be accessed via
 
