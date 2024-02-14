@@ -38,11 +38,20 @@ fi
 # start cron daemon for logrotate
 service cron start
 
-if [ "$CAPTURE" = "on" ]
-then
+
+echo "Look at log files for errors"
+if [ "$CAPTURE" = "on" ]; then
+    echo "  /data/logs/capture.log"
+fi
+if [ "$VIEWER" = "on" ]; then
+    echo "  /data/logs/viewer.log"
+fi
+
+
+# check if the capture process should be started
+if [ "$CAPTURE" = "on" ]; then
     echo "Launch capture..."
-    if [ "$VIEWER" = "on" ]
-    then
+    if [ "$VIEWER" = "on" ]; then
         # Background execution
         exec $ARKIMEDIR/bin/capture --config $ARKIMEDIR/etc/config.ini --host $ARKIME_HOSTNAME >> $ARKIMEDIR/logs/capture.log 2>&1 &
     else
@@ -51,16 +60,13 @@ then
     fi
 fi
 
-echo "Look at log files for errors"
-echo "  /data/logs/viewer.log"
-echo "  /data/logs/capture.log"
-echo "Visit http://127.0.0.1:8005 with your favorite browser."
-echo "  user: admin"
-echo "  password: $ARKIME_ADMIN_PASSWORD"
-
-if [ "$VIEWER" = "on" ]
-then
+# check if the viewer should be started
+if [ "$VIEWER" = "on" ]; then
     echo "Launch viewer..."
+    echo "Visit http://127.0.0.1:8005 with your favorite browser."
+    echo "  user: admin"
+    echo "  password: $ARKIME_ADMIN_PASSWORD"
+
     pushd $ARKIMEDIR/viewer
     exec $ARKIMEDIR/bin/node viewer.js -c $ARKIMEDIR/etc/config.ini --host $ARKIME_HOSTNAME >> $ARKIMEDIR/logs/viewer.log 2>&1
     popd
