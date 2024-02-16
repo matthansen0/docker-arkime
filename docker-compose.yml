@@ -72,7 +72,9 @@ services:
         volumes:
             - arkime_config:/data/config
             - arkime_logs:/data/logs
-            - $PCAP_DIR:/data/pcap
+            - type: bind
+              source: $PCAP_DIR
+              target: /data/pcap
         networks:
             - arkime-os
 
