@@ -8,7 +8,7 @@ RUN apt-get -qq update && \
     apt-get install -yq curl libmagic-dev wget logrotate
 
 # Declare args
-ARG ARKIME_VERSION=5.0.0
+ARG ARKIME_VERSION=5.0.1
 ARG UBUNTU_VERSION
 ARG ARKIME_DEB_PACKAGE="arkime_${ARKIME_VERSION}-1.ubuntu2204_amd64.deb"
 
