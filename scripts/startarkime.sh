@@ -50,6 +50,9 @@ fi
 
 # check if the capture process should be started
 if [ "$CAPTURE" = "on" ]; then
+    # ensure /data/pcap directory is writable for user 'nobody' (used by the capture process)
+    chmod 757 /data/pcap
+
     echo "Launch capture..."
     if [ "$VIEWER" = "on" ]; then
         # Background execution
