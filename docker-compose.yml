@@ -64,6 +64,10 @@ services:
             - $OS_NODE1
             # uncomment and add all OS node container names
             # - $OS_NODE2
+        env_file:
+            - path: ./env/arkime-compose.env
+              # defaults to values defined in Dockerfile
+              required: false
         environment:
             - OS_HOST=$OS_NODE1
             - OS_PORT=9200

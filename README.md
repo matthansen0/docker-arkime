@@ -48,9 +48,15 @@ These parameters are available:
 You can use `docker-compose` if you want to setup OpenSearch together with Arkime in one step.
 
 #### Configuration
-1. Please copy or rename the file `docker-compose.env` to `.env` **before** running `docker-compose up`. You may want to change some of the variables inside. Each variable is documented there.
+1. Copy the file `env/docker-compose.env` to `.env` **before** running `docker-compose up`:
+    ```shell
+    cp env/docker-compose.env .env
+    ```
+    You may want to change some of the variables inside. Each variable is documented there.
 
-2. Please ensure you have done this step (otherwise OpenSearch won't start): https://opensearch.org/docs/latest/opensearch/install/docker/#important-host-settings
+2. Check the settings in `env/arkime-compose.env` file. These are used for the Arkime container. The available settings and values are documented in the `ENV VARIABLE` table above.
+
+3. Ensure you have done this step (otherwise OpenSearch won't start): https://opensearch.org/docs/latest/opensearch/install/docker/#important-host-settings
 
     To apply the setting on a live system, run:
     ```shell
