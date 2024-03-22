@@ -8,6 +8,14 @@ Ready to use Docker images can be pulled from https://hub.docker.com/r/mammo0/do
 
 To run this image a **working OpenSearch** environment is required. Please stick to their documentation for setting this up. (E.g. for Docker: https://opensearch.org/docs/latest/opensearch/install/docker)
 
+**Please note:** This Docker image does currently **NOT** support
+- SSL connections and
+- user authentication
+
+to OpenSearch nodes. Please enshure that the following environment variables are set for the OpenSearch nodes:
+- `DISABLE_SECURITY_PLUGIN=true`
+- `DISABLE_INSTALL_DEMO_CONFIG=true`
+
 
 
 ### Run the container
