@@ -24,7 +24,7 @@ This image can be run with
 ```shell
 docker run \
     -e OS_HOST=opensearch \
-    -e OS_PORT 9200 \
+    -e OS_PORT=9200 \
     -v <config_volume>:/data/config \
     -v <pcap_volume>:/data/pcap \
     -v <log_volume>:/data/logs \
