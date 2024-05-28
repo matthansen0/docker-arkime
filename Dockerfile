@@ -8,13 +8,15 @@ RUN apt-get -qq update && \
     apt-get install -yq curl libmagic-dev wget logrotate
 
 # Set arguments
-ARG ARKIME_VERSION=5.1.2
+ARG ARKIME_VERSION=5.2.0
 ARG ARKIME_DEB_PACKAGE="arkime_${ARKIME_VERSION}-1.ubuntu2204_amd64.deb"
 
 # Set environment variables
 ENV ARKIME_VERSION $ARKIME_VERSION
 ENV OS_HOST "opensearch"
 ENV OS_PORT "9200"
+ENV OS_USER ""
+ENV OS_PASSWORD ""
 ENV ARKIME_INTERFACE "eth0"
 ENV ARKIME_ADMIN_PASSWORD "admin"
 ENV ARKIME_HOSTNAME "localhost"

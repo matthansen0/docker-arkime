@@ -16,7 +16,13 @@ export ARKIME_ELASTICSEARCH="http://"$OS_HOST":"$OS_PORT
 export ARKIME_INET=no
 
 if [ ! -f $ARKIMEDIR/etc/.initialized ]; then
-    echo -e "$ARKIME_LOCALELASTICSEARCH\n$ARKIME_INET" | $ARKIMEDIR/bin/Configure
+    if [ -z $OS_USER ]; then
+        # pass empty OS user to Configure script
+        echo -e "$ARKIME_LOCALELASTICSEARCH\n\n$ARKIME_INET" | $ARKIMEDIR/bin/Configure
+    else
+        # pass OS user and password to Configure
+        echo -e "$ARKIME_LOCALELASTICSEARCH\n$OS_USER\n$OS_PASSWORD\n$ARKIME_INET" | $ARKIMEDIR/bin/Configure
+    fi
     echo INIT | $ARKIMEDIR/db/db.pl http://$OS_HOST:$OS_PORT init
     $ARKIMEDIR/bin/arkime_add_user.sh admin "Admin User" $ARKIME_ADMIN_PASSWORD --admin
     echo $ARKIME_VERSION > $ARKIMEDIR/etc/.initialized
