@@ -93,4 +93,4 @@ docker exec -it <container_name> \
     /data/arkime-parse-pcap-folder.sh -d <directory_with_pcap_files> -t <tag>
 ```
 
-If parameter `-d` is omitted, the script asks if you want to import the default direcotry `/data/pcap`.
+If parameter `-d` is omitted, the script asks if you want to import the default directory `/data/pcap`.
