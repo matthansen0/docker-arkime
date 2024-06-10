@@ -7,15 +7,16 @@ RUN apt-get -qq update && \
     apt-get -yq upgrade && \
     apt-get install -yq curl libmagic-dev wget logrotate
 
-# Declare args
-ARG ARKIME_VERSION=5.0.1
-ARG UBUNTU_VERSION
+# Set arguments
+ARG ARKIME_VERSION=5.2.0
 ARG ARKIME_DEB_PACKAGE="arkime_${ARKIME_VERSION}-1.ubuntu2204_amd64.deb"
 
-# Declare envs vars for each arg
+# Set environment variables
 ENV ARKIME_VERSION $ARKIME_VERSION
 ENV OS_HOST "opensearch"
 ENV OS_PORT "9200"
+ENV OS_USER ""
+ENV OS_PASSWORD ""
 ENV ARKIME_INTERFACE "eth0"
 ENV ARKIME_ADMIN_PASSWORD "admin"
 ENV ARKIME_HOSTNAME "localhost"
@@ -36,11 +37,11 @@ RUN mkdir -p /data && \
     # create the etc/oui.txt
     # It's needed for importing PCAPs. This step is omitted during 'Configure', because ARKIME_INET=no is set in 'startarkime.sh'
     "${ARKIMEDIR}/bin/arkime_update_geo.sh"
-# clean up
+# Clean up
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/* && \
     rm "/data/${ARKIME_DEB_PACKAGE}"
 
-# add scripts
+# Add scripts
 ADD /scripts /data/
 RUN chmod 755 /data/*.sh
 
